@@ -1,8 +1,11 @@
-import { AnchorProvider, Program } from "@coral-xyz/anchor";
-import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react"
+import { AnchorProvider, BN, Program } from "@coral-xyz/anchor";
+import { useAnchorWallet, useConnection, useWallet } from "@solana/wallet-adapter-react"
 import { useEffect, useMemo, useState } from "react";
 import { TODO_PROGRAM_PUBKEY } from '../constants'
 import todoIDL from '../constants/todo.json'
+import { PublicKey } from "@solana/web3.js";
+import { authorFilter } from "../utils";
+import { createTodoProgram, TodoProgram } from "../types";
 
 interface Todo {
     account: {
@@ -63,6 +66,7 @@ let dummyTodos = [
 export function useTodo() {
     const { connection } = useConnection();
     const anchorWallet = useAnchorWallet();
+    const { publicKey } = useWallet();
 
     const [provider, setProvider] = useState<AnchorProvider | null>(null);
     const [initialized, setIniitialized] = useState(false);
@@ -74,15 +78,39 @@ export function useTodo() {
 
     const program = useMemo(() => {
         if (anchorWallet) {
-            const provider = new AnchorProvider(connection, anchorWallet, {})
+            const provider = new AnchorProvider(connection, anchorWallet, {});
             setProvider(provider);
-            return new Program({ ...todoIDL, address: TODO_PROGRAM_PUBKEY }, provider);
+            return createTodoProgram(todoIDL, new PublicKey(TODO_PROGRAM_PUBKEY), provider);
         }
-    }, [connection, anchorWallet])
+        return null;
+    }, [connection, anchorWallet]);
 
     useEffect(() => {
-        if(initialized) {
-            setTodos(dummyTodos)
+        
+        const findProfileAccounts = async () => {
+            if(program && publicKey && !transactionPending){
+                setLoading(true);
+                try {
+                    const [profilePda, profileBump] = await PublicKey.findProgramAddressSync([
+                        new BN("USER_STATE").toArrayLike(Buffer, 'le', 8),
+                        publicKey.toBuffer(),
+                    ], program.programId);
+
+                    const profileAccount = await program.account.userProfile.fetch(profilePda);
+
+                    if (profileAccount) {
+                        setLastTodo(profileAccount.lastTodo);
+                        setIniitialized(true);
+
+                        const todoAccounts = await program.account.todoAccount.all([authorFilter])
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    setLoading(false);
+                }
+            }
         }
     }, [initialized])
 

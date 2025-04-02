@@ -4,17 +4,13 @@
     "constants": [
         {
             "name": "USER_TAG",
-            "type": {
-                "defined": "&[u8]"
-            },
-            "value": "b\"USER_STATE\""
+            "type": "bytes",
+            "value": "[85, 83, 69, 82, 95, 83, 84, 65, 84, 69]"
         },
         {
             "name": "TODO_TAG",
-            "type": {
-                "defined": "&[u8]"
-            },
-            "value": "b\"TODO_STATE\""
+            "type": "bytes",
+            "value": "[84, 79, 68, 79, 95, 83, 84, 65, 84, 69]"
         }
     ],
     "instructions": [
@@ -43,6 +39,11 @@
             "name": "addTodo",
             "accounts": [
                 {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
                     "name": "userProfile",
                     "isMut": true,
                     "isSigner": false
@@ -51,11 +52,6 @@
                     "name": "todoAccount",
                     "isMut": true,
                     "isSigner": false
-                },
-                {
-                    "name": "authority",
-                    "isMut": true,
-                    "isSigner": true
                 },
                 {
                     "name": "systemProgram",
@@ -74,6 +70,11 @@
             "name": "markTodo",
             "accounts": [
                 {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
                     "name": "userProfile",
                     "isMut": true,
                     "isSigner": false
@@ -82,11 +83,6 @@
                     "name": "todoAccount",
                     "isMut": true,
                     "isSigner": false
-                },
-                {
-                    "name": "authority",
-                    "isMut": true,
-                    "isSigner": true
                 },
                 {
                     "name": "systemProgram",
@@ -105,6 +101,11 @@
             "name": "removeTodo",
             "accounts": [
                 {
+                    "name": "authority",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
                     "name": "userProfile",
                     "isMut": true,
                     "isSigner": false
@@ -112,16 +113,6 @@
                 {
                     "name": "todoAccount",
                     "isMut": true,
-                    "isSigner": false
-                },
-                {
-                    "name": "authority",
-                    "isMut": true,
-                    "isSigner": true
-                },
-                {
-                    "name": "systemProgram",
-                    "isMut": false,
                     "isSigner": false
                 }
             ],
@@ -193,12 +184,12 @@
         {
             "code": 6002,
             "name": "MathOverflow",
-            "msg": "Math operation overflow"
+            "msg": "Math Operation Overflow"
         },
         {
             "code": 6003,
             "name": "AlreadyMarked",
-            "msg": "Already marked"
+            "msg": "Already Marked"
         }
     ]
 }

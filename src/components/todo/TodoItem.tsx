@@ -1,4 +1,4 @@
-import { Calendar, Trash2 } from "lucide-react";
+import { Calendar, Check, Trash2 } from "lucide-react";
 
 interface TodoItemProps {
     idx: number;
@@ -22,8 +22,14 @@ const TodoItem = ({ idx, content, marked, dateline, markAction, removeAction }: 
         <li key={idx} className="flex items-center justify-between p-3 py-4 border border-none rounded-2xl shadow-sm bg-secondary text-gray w-full">
             <div
                 onClick={handleMarkTodo}
-                className={`w-5 h-5 rounded-md border-2 border-accent cursor-pointer ${marked ? 'bg-accent' : ''}`}
-            />
+                className={`w-5 h-5 rounded-md border-2 border-accent cursor-pointer ${marked ? 'bg-accent opacity-50' : ''}`}
+            >
+                {marked && (
+                    <div className="w-full h-full text-black font-extrabold rounded-md flex items-center justify-center">
+                        <Check className="font-bold text-2xl" />
+                    </div>
+                )}
+            </div>
             <div className="flex-1 ml-3">
                 <span className="text-base font-medium text-white">{content}</span>
                 {dateline && (

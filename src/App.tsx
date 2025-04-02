@@ -1,3 +1,4 @@
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
 import Loading from "./components/Loading"
 import TodoSection from "./components/todo/TodoSection"
 import { useTodo } from "./hooks/useTodo"
@@ -7,7 +8,7 @@ function App() {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-primary text-gray text-xl p-4 mt-20">
-      <div className="w-[480px] sm:w-[640px] md:w-[768px] lg:w-[1024px] xl:w-[1280px]">
+      <div className="w-[480px] sm:w-[640px] md:w-[768px] lg:w-[1024px] xl:w-[1280px] flex justify-between">
         {initialized ? (
           <div className="flex items-center gap-3 bg-secondary p-4 rounded-2xl shadow-lg">
             <div className="flex-1">
@@ -33,7 +34,10 @@ function App() {
           </button>
         )}
 
-        {/* <WalletMultiButton /> */}
+        <WalletMultiButton style={{
+          backgroundColor: "var(--color-accent)",
+          color: "var(--color-primary)"
+        }} />
       </div>
 
       <div className="w-[480px] sm:w-[640px] md:w-[768px] lg:w-[1024px] xl:w-[1280px] mt-6">

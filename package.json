@@ -13,6 +13,8 @@
     "@coral-xyz/anchor": "^0.31.0",
     "@solana/wallet-adapter-base": "^0.9.24",
     "@solana/wallet-adapter-react": "^0.15.36",
+    "@solana/wallet-adapter-react-ui": "^0.9.36",
+    "@solana/wallet-adapter-wallets": "^0.19.33",
     "@solana/web3.js": "^1.98.0",
     "@tailwindcss/vite": "^4.0.17",
     "lucide-react": "^0.486.0",
